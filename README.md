@@ -1,4 +1,4 @@
-# Bifrost
+# Teste Case Coodesh
 
 Esta aplicação implementa os processos de armazenamento de dados dos produtos importados do serviço OpenFoodFacts.
 
@@ -71,6 +71,14 @@ Entre no container do php da aplicação:
 ```shell
 docker exec -it app bash
 ```
+Execute o seguinte comando para obter as informações iniciais
+`````php
+app:update-open-food-facts-products 
+`````
+Aguarde alguns minutos. Você pode acompanhar o processo acessando a url
+````shell
+http://localhost:8344/horizon/
+````
 Saia do container
 
 ```shell
