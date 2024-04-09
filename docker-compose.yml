@@ -1,0 +1,49 @@
+version: "3"
+services:
+    app:
+        container_name: app
+        build:
+            context: .
+            dockerfile: .docker/local/Dockerfile
+        restart: unless-stopped
+        ports:
+            - "${APP_PORT:-80}:80"
+        volumes:
+            - ".:/app"
+        networks:
+            - src_default
+        depends_on:
+            - mongodb
+            - redis
+
+    mongodb:
+        container_name: mongodb
+        image: mongodb/mongodb-enterprise-server:7.0.0-ubi8
+        ports:
+            - "${FORWARD_MONGODB_PORT:-27017}:27017"
+        environment:
+            "MONGO_INITDB_ROOT_USERNAME": "${MONGODB_USERNAME}"
+            "MONGO_INITDB_ROOT_PASSWORD": "${MONGODB_PASSWORD}"
+        volumes:
+            - ".docker/local/data/mongodb:/data/db"
+        networks:
+            - src_default
+
+    redis:
+        container_name: redis
+        restart: unless-stopped
+        image: "redis:alpine"
+        ports:
+            - "${FORWARD_REDIS_PORT:-6379}:6379"
+        volumes:
+            - ".docker/local/data/redis:/data"
+        networks:
+            - src_default
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            retries: 3
+            timeout: 5s
+
+networks:
+    src_default:
+        driver: bridge
