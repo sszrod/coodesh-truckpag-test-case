@@ -73,7 +73,7 @@ docker exec -it app bash
 ```
 Execute o seguinte comando para obter as informações iniciais
 `````php
-app:update-open-food-facts-products 
+php artisan app:update-open-food-facts-products 
 `````
 Aguarde alguns minutos. Você pode acompanhar o processo acessando a url
 ````shell
@@ -87,6 +87,7 @@ exit
 
 ### Documentação dos endpoints
 ```shell
+Para todos os endpoints é ncessário adicionar no header a chave Api-Key com o valor definido no .env
 http://localhost:8344/docs/api
 ```
 ### NOTAS
